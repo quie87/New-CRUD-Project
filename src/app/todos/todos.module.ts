@@ -8,9 +8,10 @@ import { TodosPageRoutingModule } from './todos-routing.module';
 
 import { TodosPage } from './todos.page';
 import { HeaderComponent } from '../layout/header/header.component';
+import { AddTodoComponent } from './add-todo/add-todo.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, TodosPageRoutingModule],
-  declarations: [TodosPage, HeaderComponent]
+  declarations: [TodosPage, HeaderComponent, AddTodoComponent]
 })
 export class TodosPageModule {}
