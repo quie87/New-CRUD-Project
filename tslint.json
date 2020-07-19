@@ -1,10 +1,9 @@
 {
   "extends": "tslint:recommended",
   "rules": {
-    "align": {
-      "options": ["parameters", "statements"]
-    },
+    "typedef": [true, "call-signature", "parameter", "arrow-parameter", "arrow-call-signature", "property-declaration"],
     "array-type": false,
+    "arrow-parens": false,
     "arrow-return-shorthand": true,
     "curly": true,
     "deprecation": {
