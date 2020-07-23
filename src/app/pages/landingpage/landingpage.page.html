@@ -1,7 +1,38 @@
-<app-header></app-header>
+<ion-header class="ion-text-center login">
+  <h1>Get Stuff Done 2.0</h1>
+</ion-header>
 
 <ion-content>
-  <ion-title>
-    <h1>LandingPage</h1>
-  </ion-title>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-md="4">
+        <ion-title>
+          <h2>Keep It Simple, Get Stuff Done</h2>
+        </ion-title>
+        <p>
+          Get Stuff Done is what you need to plan, organize and to get the sweet satisfaction of checking all your stuff
+          off once you´re done! From projects to shopping lists, Get Stuff done will make your life easier whenever and
+          wherever you are. All at the same place with an easy layout.
+        </p>
+      </ion-col>
+      <ion-col size="12" size-md="4">
+        <form [formGroup]="user" (ngSubmit)="onSubmit()">
+          <h3>Sign up</h3>
+          <ion-label>Name</ion-label>
+          <ion-item>
+            <ion-input type="text" formControlName="name" placeholder="Enter your name..."></ion-input>
+          </ion-item>
+          <ion-label>Email</ion-label>
+          <ion-item>
+            <ion-textarea formControlName="email" placeholder="Enter a valid email..."></ion-textarea>
+          </ion-item>
+          <ion-label>Your Password</ion-label>
+          <ion-item>
+            <ion-textarea formControlName="password" placeholder="Enter a strong password..."></ion-textarea>
+          </ion-item>
+          <ion-button type="submit" [disabled]="!user.valid">Submit</ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
