@@ -4,12 +4,12 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 
-import { TodosComponent } from './todos.component';
-import { AddTodoComponent } from './add-todo/add-todo.component';
+import { ProjectsComponent } from './projects.component';
+import { AddProjectComponent } from './add-project/add-project.component';
 
 @NgModule({
-  declarations: [TodosComponent, AddTodoComponent],
+  declarations: [ProjectsComponent, AddProjectComponent],
   imports: [CommonModule, IonicModule, FormsModule],
-  exports: [TodosComponent]
+  exports: [ProjectsComponent]
 })
-export class TodosModule {}
+export class ProjectsModule {}
