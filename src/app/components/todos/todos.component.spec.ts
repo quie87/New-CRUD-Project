@@ -1,24 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { TodosPage } from './todos.page';
+import { TodosComponent } from './todos.component';
 
-describe('TodosPage', () => {
-  let component: TodosPage;
-  let fixture: ComponentFixture<TodosPage>;
+describe('TodosPage', (): void => {
+  let component: TodosComponent;
+  let fixture: ComponentFixture<TodosComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(async((): void => {
     TestBed.configureTestingModule({
-      declarations: [ TodosPage ],
+      declarations: [TodosComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TodosPage);
+    fixture = TestBed.createComponent(TodosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it('should create', (): void => {
     expect(component).toBeTruthy();
   });
 });

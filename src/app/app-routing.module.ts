@@ -8,23 +8,14 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'todos',
-    // tslint:disable-next-line:typedef
-    loadChildren: () => import('./todos/todos.module').then((m) => m.TodosPageModule)
-  },
-  {
-    path: 'projects',
-    // tslint:disable-next-line:typedef
-    loadChildren: () => import('./projects/projects.module').then((m) => m.ProjectsPageModule)
-  },
-  {
     path: 'landingpage',
     // tslint:disable-next-line:typedef
     loadChildren: () => import('./pages/landingpage/landingpage.module').then((m) => m.LandingpagePageModule)
   },
   {
     path: 'main',
-    loadChildren: () => import('./pages/main/main.module').then( m => m.MainPageModule)
+    // tslint:disable-next-line:typedef
+    loadChildren: () => import('./pages/main/main.module').then((m) => m.MainPageModule)
   }
 ];
 

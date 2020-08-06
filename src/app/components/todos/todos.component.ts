@@ -4,10 +4,10 @@ import { Todo } from './shared/todo.model';
 
 @Component({
   selector: 'app-todos',
-  templateUrl: './todos.page.html',
-  styleUrls: ['./todos.page.scss']
+  templateUrl: './todos.component.html',
+  styleUrls: ['./todos.component.scss']
 })
-export class TodosPage implements OnInit {
+export class TodosComponent implements OnInit {
   todos: Todo[] = [];
   completed: string;
 

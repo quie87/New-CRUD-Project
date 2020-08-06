@@ -8,9 +8,10 @@ import { MainPageRoutingModule } from './main-routing.module';
 
 import { MainPage } from './main.page';
 import { HeaderComponent } from '../../layout/header/header.component';
+import { TodosComponent } from 'src/app/components/todos/todos.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, MainPageRoutingModule],
-  declarations: [MainPage, HeaderComponent]
+  declarations: [MainPage, HeaderComponent, TodosComponent]
 })
 export class MainPageModule {}
