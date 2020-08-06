@@ -1,32 +1,29 @@
-<app-header></app-header>
-<ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-title>
-          <h1>Todos</h1>
-        </ion-title>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="12" size-md="6">
-        <app-add-todo (addTodo)="addTodo($event)"></app-add-todo>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="12" size-md="6">
-        <ion-list *ngIf="hasTodos()">
-          <ion-item *ngFor="let todo of todos">
-            <ion-checkbox slot="start" [(ngModel)]="todo.completed" (ngModelChange)="onToggle(todo)"></ion-checkbox>
-            <ion-label [ngClass]="{'is-complete': todo.completed}">
-              <h3>{{todo.title}}</h3>
-            </ion-label>
-            <ion-button (click)="onDelete(todo)" color="danger">
-              <ion-icon name="trash"></ion-icon>
-            </ion-button>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-title>
+        <h1>Todos</h1>
+      </ion-title>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12" size-md="6">
+      <app-add-todo (addTodo)="addTodo($event)"></app-add-todo>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12" size-md="6">
+      <ion-list *ngIf="hasTodos()">
+        <ion-item *ngFor="let todo of todos">
+          <ion-checkbox slot="start" [(ngModel)]="todo.completed" (ngModelChange)="onToggle(todo)"></ion-checkbox>
+          <ion-label [ngClass]="{'is-complete': todo.completed}">
+            <h3>{{todo.title}}</h3>
+          </ion-label>
+          <ion-button (click)="onDelete(todo)" color="danger">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-grid>

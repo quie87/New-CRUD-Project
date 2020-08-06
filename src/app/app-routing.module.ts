@@ -21,6 +21,10 @@ const routes: Routes = [
     path: 'landingpage',
     // tslint:disable-next-line:typedef
     loadChildren: () => import('./pages/landingpage/landingpage.module').then((m) => m.LandingpagePageModule)
+  },
+  {
+    path: 'main',
+    loadChildren: () => import('./pages/main/main.module').then( m => m.MainPageModule)
   }
 ];
 
