@@ -6,10 +6,13 @@ import { FormsModule } from '@angular/forms';
 
 import { ProjectsComponent } from './projects.component';
 import { AddProjectComponent } from './add-project/add-project.component';
+import { ProjectsService } from './shared/projects.service';
+import { TodosModule } from '../todos/todos.module';
 
 @NgModule({
   declarations: [ProjectsComponent, AddProjectComponent],
-  imports: [CommonModule, IonicModule, FormsModule],
+  imports: [CommonModule, IonicModule, FormsModule, TodosModule],
+  providers: [ProjectsService],
   exports: [ProjectsComponent]
 })
 export class ProjectsModule {}
