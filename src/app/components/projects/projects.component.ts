@@ -35,6 +35,7 @@ export class ProjectsComponent implements OnInit {
       return projects._id !== project._id;
     });
 
-    this.projectsService.deleteProject(project);
+    // this.projectsService.deleteProject(project._id).subscribe((res: any): any => console.log(res.status));
+    this.projectsService.deleteProject(project._id).subscribe();
   }
 }
