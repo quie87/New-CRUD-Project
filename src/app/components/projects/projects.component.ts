@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
+  activeProject: Project;
 
   constructor(private projectsService: ProjectsService) {}
 
@@ -37,5 +38,13 @@ export class ProjectsComponent implements OnInit {
 
     // this.projectsService.deleteProject(project._id).subscribe((res: any): any => console.log(res.status));
     this.projectsService.deleteProject(project._id).subscribe();
+  }
+
+  setActiveProject(project: Project): void {
+    this.activeProject = project;
+  }
+
+  hasActiveProject(): boolean {
+    return this.activeProject ? true : false;
   }
 }

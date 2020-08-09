@@ -16,9 +16,9 @@
     <ion-col size="12" size-md="6">
       <ion-list *ngIf="hasProjects()">
         <ion-item *ngFor="let project of projects">
-          <ion-label>
-            <h3>{{ project.name }}</h3>
-          </ion-label>
+          <ion-button class="project-btn" (click)="setActiveProject(project)">
+            {{ project.name }}
+          </ion-button>
           <ion-button (click)="onDelete(project)" color="danger">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
@@ -27,7 +27,7 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col>
+    <ion-col *ngIf="hasActiveProject()">
       <app-todos> </app-todos>
     </ion-col>
   </ion-row>
