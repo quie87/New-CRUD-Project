@@ -14,7 +14,7 @@
 
   <ion-row>
     <ion-col size="12" size-md="6">
-      <ion-list *ngIf="hasProjects()">
+      <ion-list *ngIf="hasProjects(); else loading">
         <ion-item *ngFor="let project of projects">
           <ion-button class="project-btn" (click)="setActiveProject(project)">
             {{ project.name }}
@@ -24,11 +24,12 @@
           </ion-button>
         </ion-item>
       </ion-list>
+      <ng-template #loading>Loading...</ng-template>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col *ngIf="hasActiveProject()">
-      <app-todos> </app-todos>
+      <app-todos [activeProject]="getActiveProject()" [user]="getUser()"> </app-todos>
     </ion-col>
   </ion-row>
 </ion-grid>

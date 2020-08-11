@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ProjectsService } from './shared/projects.service';
 
 import { Project } from '../projects/shared/project.model';
@@ -10,8 +10,17 @@ import { Observable } from 'rxjs';
   styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent implements OnInit {
-  projects: Project[] = [];
   activeProject: Project;
+  // @Output() activeProject: EventEmitter<any>;
+  // activeProject: Project;
+
+  projects: Project[] = [];
+
+  user = {
+    _id: 1,
+    name: 'Lasse',
+    email: 'lasse@gmail.com'
+  };
 
   constructor(private projectsService: ProjectsService) {}
 
@@ -46,5 +55,14 @@ export class ProjectsComponent implements OnInit {
 
   hasActiveProject(): boolean {
     return this.activeProject ? true : false;
+  }
+
+  getActiveProject(): any {
+    return this.activeProject;
+  }
+
+  // move this to authService later
+  getUser(): any {
+    return this.user;
   }
 }

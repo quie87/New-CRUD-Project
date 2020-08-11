@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { TodosService } from './shared/todos.service';
 import { Todo } from './shared/todo.model';
+import { Project } from '../projects/shared/project.model';
+import { ProjectsService } from '../projects/shared/projects.service';
+import { User } from '../../shared/user.model';
 
 @Component({
   selector: 'app-todos',
@@ -10,11 +13,14 @@ import { Todo } from './shared/todo.model';
 export class TodosComponent implements OnInit {
   todos: Todo[] = [];
   completed: string;
+  @Input() activeProject: Project;
+  @Input() user: User;
 
-  constructor(private todosService: TodosService) {}
+  constructor(private todosService: TodosService, private projectService: ProjectsService) {}
 
   ngOnInit(): void {
-    this.todosService.getTodos().subscribe((todos: Todo[]): Todo[] => (this.todos = todos));
+    this.todosService.getTodos(this.user._id).subscribe((todos: any): any => (this.todos = todos.response.todos));
+    console.log(this.todos);
   }
 
   hasTodos(): boolean {
@@ -30,7 +36,7 @@ export class TodosComponent implements OnInit {
 
   onDelete(todo: Todo): void {
     this.todos = this.todos.filter((todos: Todo): boolean => {
-      return todos.id !== todo.id;
+      return todos._id !== todo._id;
     });
 
     this.todosService.deleteTodo(todo).subscribe();

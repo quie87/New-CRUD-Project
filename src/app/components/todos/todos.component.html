@@ -16,8 +16,8 @@
       <ion-list *ngIf="hasTodos()">
         <ion-item *ngFor="let todo of todos">
           <ion-checkbox slot="start" [(ngModel)]="todo.completed" (ngModelChange)="onToggle(todo)"></ion-checkbox>
-          <ion-label [ngClass]="{'is-complete': todo.completed}">
-            <h3>{{todo.title}}</h3>
+          <ion-label [ngClass]="{ 'is-complete': todo.completed }">
+            <h3>{{ todo.title }}</h3>
           </ion-label>
           <ion-button (click)="onDelete(todo)" color="danger">
             <ion-icon name="trash"></ion-icon>
