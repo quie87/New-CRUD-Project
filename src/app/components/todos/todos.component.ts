@@ -20,7 +20,6 @@ export class TodosComponent implements OnInit {
 
   ngOnInit(): void {
     this.todosService.getTodos(this.user._id).subscribe((todos: any): any => (this.todos = todos.response.todos));
-    console.log(this.todos);
   }
 
   hasTodos(): boolean {
@@ -43,7 +42,14 @@ export class TodosComponent implements OnInit {
   }
 
   addTodo(event: any): void {
-    this.todosService.addTodo(event).subscribe((todo: Todo): any => {
+    const newTodo: Todo = {
+      title: event.title,
+      projectId: this.activeProject._id,
+      userId: this.activeProject.userId,
+      completed: false
+    };
+
+    this.todosService.addTodo(newTodo).subscribe((todo: Todo): any => {
       this.todos.push(todo);
     });
   }

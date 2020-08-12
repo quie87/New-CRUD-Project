@@ -1,6 +1,6 @@
 export interface Project {
-  _id: number;
+  _id: string;
   name: string;
-  userId: number;
+  userId: string;
   createdAt: Date;
 }
