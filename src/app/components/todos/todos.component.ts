@@ -11,10 +11,11 @@ import { User } from '../../shared/user.model';
   styleUrls: ['./todos.component.scss']
 })
 export class TodosComponent implements OnInit {
-  todos: Todo[] = [];
-  completed: string;
   @Input() activeProject: Project;
   @Input() user: User;
+
+  todos: Todo[] = [];
+  completed: string;
 
   constructor(private todosService: TodosService, private projectService: ProjectsService) {}
 
@@ -22,14 +23,27 @@ export class TodosComponent implements OnInit {
     this.todosService.getTodos(this.user._id).subscribe((todos: any): any => (this.todos = todos.response.todos));
   }
 
+  renderTodos(): Todo[] {
+    const todosToRender: Todo[] = [];
+
+    this.todos.forEach((todo: Todo): void => {
+      if (todo.projectId === this.activeProject._id) {
+        todosToRender.push(todo);
+      }
+    });
+    return todosToRender;
+  }
+
   hasTodos(): boolean {
     return this.todos && this.todos.length > 0 ? true : false;
   }
 
   onToggle(todo: Todo): any {
+    console.log(todo.completed);
+    console.log(todo);
     // Fan vad coolt att detta funkar
     // console.log('completed: ' + todoItem.completed);
-    this.todosService.toggleCompleted(todo).subscribe();
+    this.todosService.toggleCompleted(todo).subscribe((res: any): any => console.log('Resp: ' + res));
     // return [...this.todos, todoItem];
   }
 

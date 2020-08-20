@@ -12,10 +12,10 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="12" size-md="6">
-      <ion-list *ngIf="hasTodos()">
-        <div *ngFor="let todo of todos">
-          <ion-item *ngIf="todo.projectId === activeProject._id; else elseblock">
+    <ion-col size="12" size-md="6" *ngIf="hasTodos() && renderTodos().length > 0; else nomessages">
+      <ion-list>
+        <div *ngFor="let todo of renderTodos()">
+          <ion-item>
             <ion-checkbox slot="start" [(ngModel)]="todo.completed" (ngModelChange)="onToggle(todo)"></ion-checkbox>
             <ion-label [ngClass]="{ 'is-complete': todo.completed }">
               <h3>{{ todo.title }}</h3>
@@ -28,4 +28,9 @@
       </ion-list>
     </ion-col>
   </ion-row>
+  <ng-template #nomessages>
+    <div>
+      <p>You currently don't have any Todos in this Project, Time to add some!</p>
+    </div>
+  </ng-template>
 </ion-grid>

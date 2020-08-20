@@ -28,7 +28,7 @@ export class ProjectsService {
     return this.http.post(this.serverUrl, project, httpOptions);
   }
 
-  deleteProject(projectId: number): Observable<any> {
+  deleteProject(projectId: string): Observable<any> {
     return this.http.delete(this.serverUrl + '/' + projectId, httpOptions).pipe(catchError(this.handleError));
   }
 
