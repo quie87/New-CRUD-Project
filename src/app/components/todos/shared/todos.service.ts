@@ -25,8 +25,8 @@ export class TodosService {
   }
 
   toggleCompleted(todo: Todo): Observable<any> {
-    const url = `${this.todosEndpoint}/update/${todo._id}`;
-    return this.http.post(url, todo);
+    const url = `${this.todosEndpoint}/${todo._id}`;
+    return this.http.patch(url, httpOptions);
   }
 
   deleteTodo(todo: Todo): Observable<Todo> {
