@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, of } from 'rxjs';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 import { catchError, tap, mapTo } from 'rxjs/operators';
 import { User } from './user.model';
-import { HttpService } from './http.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -34,14 +33,6 @@ export class AuthService {
     return this.jwtToken;
   }
 
-  storeToken(token: string): void {
-    localStorage.setItem(this.jwtToken, token);
-  }
-
-  setAuthenticated(): void {
-    this.authenticated = true;
-  }
-
   registerNewUser(userToRegistrate: object): Observable<any> {
     return this.http.post(this.serverUrl + 'users/signup', userToRegistrate, httpOptions).pipe(
       tap((resp: any): any => this.doSignIn(resp)),
@@ -64,19 +55,27 @@ export class AuthService {
     );
   }
 
-  doSignIn(res: any): void {
-    console.log('Kommer hit');
-    this.storeToken(res.token);
-    this.setUser(res.user);
+  logOut(): void {
+    localStorage.removeItem(this.jwtToken);
+    this.jwtToken = '';
+    this.authenticated = false; // tror inte jag behöver denna
   }
 
-  setUser(user: User): void {
+  private doSignIn(res: any): void {
+    this.storeToken(res.token);
+    this.setUser(res.user);
+    this.setAuthenticated();
+  }
+
+  private setUser(user: User): void {
     this.user = user;
   }
 
-  logOut(): void {
-    localStorage.removeItem(this.jwtToken);
-    this.authenticated = false; // tror inte jag behöver denna
-    // Remove token from localstorage/sessionstorage
+  private setAuthenticated(): void {
+    this.authenticated = true;
+  }
+
+  private storeToken(token: string): void {
+    localStorage.setItem(this.jwtToken, token);
   }
 }

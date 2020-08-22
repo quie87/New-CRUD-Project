@@ -22,11 +22,6 @@ export class LandingpagePage implements OnInit {
   }
 
   onSubmit(): void {
-    this.auth.registerNewUser(this.user.value).subscribe((res: any): any => {
-      // this.auth.signIn(res);
-      // console.log(this.auth.getToken);
-      // console.log(this.auth.getUser());
-      console.log(res);
-    });
+    this.auth.registerNewUser(this.user.value).subscribe();
   }
 }
