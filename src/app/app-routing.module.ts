@@ -1,25 +1,19 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes, CanActivate } from '@angular/router';
+import { AuthGuard } from './shared/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'landingpage',
-    pathMatch: 'full'
-  },
-  {
-    path: 'landingpage',
+    pathMatch: 'full',
     // tslint:disable-next-line:typedef
     loadChildren: () => import('./pages/landingpage/landingpage.module').then((m) => m.LandingpagePageModule)
   },
   {
-    path: 'main',
+    path: 'home',
+    canActivate: [AuthGuard],
     // tslint:disable-next-line:typedef
     loadChildren: () => import('./pages/main/main.module').then((m) => m.MainPageModule)
-  },
-  {
-    path: 'signin',
-    loadChildren: () => import('./app/pages/landingpage/signin/signin.module').then( m => m.SigninPageModule)
   }
 ];
 

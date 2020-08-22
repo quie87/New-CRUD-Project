@@ -7,15 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: LandingpagePage
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class LandingpagePageRoutingModule {}
