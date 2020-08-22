@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -6,11 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  constructor() {}
+  constructor(private auth: AuthService) {}
 
   ngOnInit(): void {}
 
+  isAuthenticated(): boolean {
+    return this.auth.isAuthenticated();
+  }
+
   signOut(): void {
-    console.log('Not implemented yet');
+    this.auth.logOut();
   }
 }

@@ -1,0 +1,13 @@
+<ion-content>
+  <form [formGroup]="user" (ngSubmit)="onSubmit()">
+    <ion-label>Email</ion-label>
+    <ion-item>
+      <ion-textarea formControlName="email" placeholder="Your email..."></ion-textarea>
+    </ion-item>
+    <ion-label>Your Password</ion-label>
+    <ion-item>
+      <ion-textarea formControlName="password" placeholder="Your password..."></ion-textarea>
+    </ion-item>
+    <ion-button type="submit" color="success">Submit</ion-button>
+  </form>
+</ion-content>

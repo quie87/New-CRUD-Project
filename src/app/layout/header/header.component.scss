@@ -1,3 +1,9 @@
+@import '../../app.component.scss';
+
+.head {
+  background-color: $main-color;
+}
+
 ion-toolbar {
   display: flex;
 }

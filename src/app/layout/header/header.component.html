@@ -1,19 +1,19 @@
 <ion-header>
   <ion-toolbar>
-    <ion-row class="ion-justify-content-between ion-align-items-center">
-      <!-- <ion-col>
-        <h1>Här ska det vara en logga</h1>
-      </ion-col> -->
+    <ion-row class="ion-justify-content-between ion-align-items-center head">
       <ion-col>
         <ion-title class="ion-justify-content-center flex">
           Get Stuff Done!
         </ion-title>
       </ion-col>
-      <ion-col class="ion-justify-content-end flex">
+      <ion-col *ngIf="isAuthenticated(); else notAuth" class="ion-justify-content-end flex">
         <ion-button class="logout-btn" color="danger" fill="clear" (click)="signOut()">
           <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
         </ion-button>
       </ion-col>
+      <ng-template #notAuth>
+        <app-model></app-model>
+      </ng-template>
     </ion-row>
   </ion-toolbar>
 </ion-header>
