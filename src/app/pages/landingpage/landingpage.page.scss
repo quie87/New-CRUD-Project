@@ -1,3 +1,28 @@
-.login {
-  background-color: var(--ion-color-primary);
+@import '../../app.component.scss';
+
+.head {
+  background-color: $color-orange;
+}
+
+p,
+h1,
+h2,
+h3 {
+  font-size: 120%;
+}
+
+ion-icon {
+  background-color: green;
+  font-weight: 700;
+  border-radius: 50%;
+  padding: 0.1em;
+  margin-right: 0.6em;
+}
+
+form {
+  margin-top: 2.4em;
+
+  ion-item {
+    margin: 10px 0 10px 0;
+  }
 }

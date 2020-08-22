@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { HttpService } from 'src/app/shared/http.service';
+import { AuthService } from 'src/app/shared/auth.service';
 // import { Subscribable } from 'rxjs';
 
 @Component({
@@ -11,7 +11,7 @@ import { HttpService } from 'src/app/shared/http.service';
 export class LandingpagePage implements OnInit {
   public user: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpService) {}
+  constructor(private formBuilder: FormBuilder, private auth: AuthService) {}
 
   ngOnInit(): void {
     this.user = this.formBuilder.group({
@@ -22,8 +22,11 @@ export class LandingpagePage implements OnInit {
   }
 
   onSubmit(): void {
-    // this.http.registerNewUser(this.user.value).subscribe((res: any): any => {
-    //   console.log(res);
-    // });
+    this.auth.registerNewUser(this.user.value).subscribe((res: any): any => {
+      // this.auth.signIn(res);
+      // console.log(this.auth.getToken);
+      // console.log(this.auth.getUser());
+      console.log(res);
+    });
   }
 }

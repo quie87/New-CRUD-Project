@@ -1,4 +1,4 @@
-<ion-header class="ion-text-center login">
+<ion-header class="ion-text-center head">
   <h1>Get Stuff Done 2.0</h1>
 </ion-header>
 
@@ -14,10 +14,36 @@
           off once you´re done! From projects to shopping lists, Get Stuff done will make your life easier whenever and
           wherever you are. All at the same place with an easy layout.
         </p>
+        <ion-list inset="true">
+          <ion-item>
+            <ion-label>
+              <ion-icon name="checkmark"></ion-icon>
+              Easy overview projects, list and tasks
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <ion-icon name="checkmark"></ion-icon>
+              Whenever; online or offline
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <ion-icon name="checkmark"></ion-icon>
+              Whereever; desktop, tablet or phone
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <ion-icon name="checkmark"></ion-icon>
+              Easy access, just a push on an icon and you can start getting stuff done
+            </ion-label>
+          </ion-item>
+        </ion-list>
       </ion-col>
       <ion-col size="12" size-md="4">
+        <h2>Sign up</h2>
         <form [formGroup]="user" (ngSubmit)="onSubmit()">
-          <h3>Sign up</h3>
           <ion-label>Name</ion-label>
           <ion-item>
             <ion-input type="text" formControlName="name" placeholder="Enter your name..."></ion-input>
@@ -30,7 +56,7 @@
           <ion-item>
             <ion-textarea formControlName="password" placeholder="Enter a strong password..."></ion-textarea>
           </ion-item>
-          <ion-button type="submit" [disabled]="!user.valid">Submit</ion-button>
+          <ion-button type="submit" [disabled]="!user.valid" color="success">Submit</ion-button>
         </form>
       </ion-col>
     </ion-row>
