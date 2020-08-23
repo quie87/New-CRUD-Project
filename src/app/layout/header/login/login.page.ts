@@ -22,10 +22,10 @@ export class LoginPage implements OnInit {
 
   onSubmit(): void {
     this.auth.signIn(this.user.value).subscribe();
-    this.dismiss();
+    this.closeModal();
   }
 
-  dismiss(): void {
+  closeModal(): void {
     this.modalController.dismiss({
       dismissed: true
     });

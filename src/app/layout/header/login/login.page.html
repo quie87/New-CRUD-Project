@@ -1,4 +1,10 @@
-<ion-content>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Sign In</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
   <form [formGroup]="user" (ngSubmit)="onSubmit()">
     <ion-label>Email</ion-label>
     <ion-item>
@@ -8,6 +14,7 @@
     <ion-item>
       <ion-textarea formControlName="password" placeholder="Your password..."></ion-textarea>
     </ion-item>
-    <ion-button type="submit" color="success">Submit</ion-button>
+    <ion-button color="danger" (click)="closeModal()">Abort</ion-button>
+    <ion-button color="success" type="submit">Sign In</ion-button>
   </form>
 </ion-content>

@@ -1,8 +1,8 @@
-<ion-header>
+<ion-header class="no-boarder">
   <ion-toolbar>
     <ion-row class="ion-justify-content-between ion-align-items-center head">
-      <ion-col>
-        <ion-title class="ion-justify-content-center flex">
+      <ion-col class="ion-justify-content-center flex">
+        <ion-title>
           Get Stuff Done!
         </ion-title>
       </ion-col>
@@ -12,7 +12,9 @@
         </ion-button>
       </ion-col>
       <ng-template #notAuth>
-        <app-model></app-model>
+        <ion-col class="ion-justify-content-end flex">
+          <app-model></app-model>
+        </ion-col>
       </ng-template>
     </ion-row>
   </ion-toolbar>
