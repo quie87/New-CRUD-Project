@@ -41,22 +41,18 @@
       </ion-col>
       <ion-col size="12" size-md="4">
         <h2>Sign up</h2>
-        <form [formGroup]="user" (ngSubmit)="onSubmit()">
+        <form [formGroup]="user" (ngSubmit)="onSubmit()" (keydown.enter)="onSubmit()">
           <ion-label>Name</ion-label>
           <ion-item>
             <ion-input type="text" formControlName="name" placeholder="Enter your name..."></ion-input>
           </ion-item>
           <ion-label>Email</ion-label>
           <ion-item>
-            <ion-textarea formControlName="email" placeholder="Enter a valid email..."></ion-textarea>
+            <ion-input formControlName="email" placeholder="Enter a valid email..."></ion-input>
           </ion-item>
           <ion-label>Your Password</ion-label>
           <ion-item>
-            <ion-textarea
-              formControlName="password"
-              type="password"
-              placeholder="Enter a strong password..."
-            ></ion-textarea>
+            <ion-input formControlName="password" type="password" placeholder="Enter a strong password..."></ion-input>
           </ion-item>
           <ion-button type="submit" [disabled]="!user.valid" color="success">Submit</ion-button>
         </form>
