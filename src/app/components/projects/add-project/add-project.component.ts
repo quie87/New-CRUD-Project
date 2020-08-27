@@ -15,12 +15,7 @@ export class AddProjectComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(): any {
-    const project = {
-      name: this.projectName,
-      userId: 1
-    };
-
-    this.addProject.emit(project);
+    this.addProject.emit(this.projectName);
     this.projectName = '';
   }
 }

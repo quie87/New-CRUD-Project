@@ -15,7 +15,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-  serverUrl = 'https://my-todo-rest-api.herokuapp.com/';
+  private serverUrl = 'https://my-todo-rest-api.herokuapp.com/';
   private jwtToken = 'JWT-Token';
   user: User;
   authenticated = false;
@@ -27,6 +27,26 @@ export class AuthService {
       return false;
     }
     return true;
+  }
+
+  loadUser(): Observable<any> {
+    // Change this to using the httpOptions and just set the auth-token as a new key in it. However that works
+    const httpTokenHeader = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-auth-token': this.getTokenFromStore()
+      })
+    };
+
+    return this.http.get(this.serverUrl + 'users', httpTokenHeader).pipe(
+      tap((resp: any): any => this.setUser(resp.user)),
+      mapTo(true),
+      catchError((error: any): any => {
+        this.logOut();
+        console.log('Could not find user: ' + error.message);
+        return of(false);
+      })
+    );
   }
 
   getUser(): User {
@@ -61,7 +81,13 @@ export class AuthService {
 
   logOut(): void {
     localStorage.removeItem(this.jwtToken);
+    this.authenticated = false;
+    this.user = null;
     this.router.navigate(['']);
+  }
+
+  getTokenFromStore(): string {
+    return localStorage.getItem(this.jwtToken);
   }
 
   private doSignIn(res: any): void {

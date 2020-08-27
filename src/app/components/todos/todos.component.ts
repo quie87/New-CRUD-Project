@@ -22,6 +22,10 @@ export class TodosComponent implements OnInit {
     this.todosService.getTodos(this.user._id).subscribe((todos: any): any => (this.todos = todos.response.todos));
   }
 
+  OnDestroy(): void {
+    this.todos = [];
+  }
+
   renderTodos(): Todo[] {
     const todosToRender: Todo[] = [];
 

@@ -1,8 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProjectsService } from './shared/projects.service';
 
 import { Project } from '../projects/shared/project.model';
 import { Observable } from 'rxjs';
+import { User } from 'src/app/shared/user.model';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-projects',
@@ -11,27 +13,35 @@ import { Observable } from 'rxjs';
 })
 export class ProjectsComponent implements OnInit {
   activeProject: Project;
-  // @Output() activeProject: EventEmitter<any>;
-  // activeProject: Project;
 
   projects: Project[] = [];
+  user: User;
 
-  user = {
-    _id: 1,
-    name: 'Lasse',
-    email: 'lasse@gmail.com'
-  };
-
-  constructor(private projectsService: ProjectsService) {}
+  constructor(private projectsService: ProjectsService, private auth: AuthService) {}
 
   ngOnInit(): void {
+    this.user = this.auth.getUser();
+    this.getProjects(this.user._id);
+  }
+
+  OnDestroy(): void {
+    this.projects = [];
+    this.user = null;
+  }
+
+  getProjects(id: string): void {
     this.projectsService
-      .getProjects()
+      .getProjects(id)
       .subscribe((projects: any): any => (this.projects = projects.response.allProjects));
   }
 
-  addProject(event: any): void {
-    this.projectsService.addProject(event).subscribe((project: Project): any => {
+  addProject(projectName: string): void {
+    const newProject = {
+      name: projectName,
+      userId: this.user._id
+    };
+
+    this.projectsService.addProject(newProject).subscribe((project: Project): any => {
       this.projects.push(project);
     });
   }
@@ -57,12 +67,12 @@ export class ProjectsComponent implements OnInit {
     return this.activeProject ? true : false;
   }
 
-  getActiveProject(): any {
+  getActiveProject(): Project {
     return this.activeProject;
   }
 
-  // move this to authService later
-  getUser(): any {
+  // move this to authService later, used by Todos component atm
+  getUser(): User {
     return this.user;
   }
 }

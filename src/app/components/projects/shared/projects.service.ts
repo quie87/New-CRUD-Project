@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { Project } from './project.model';
+import { AuthService } from 'src/app/shared/auth.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -18,18 +19,25 @@ export class ProjectsService {
   serverUrl = 'https://my-todo-rest-api.herokuapp.com/projects';
   projects: Project[];
 
-  constructor(private http: HttpClient) {}
+  httpTokenHeader = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-auth-token': this.auth.getTokenFromStore()
+    })
+  };
 
-  getProjects(): Observable<any> {
-    return this.http.get(this.serverUrl + '/1', httpOptions);
+  constructor(private http: HttpClient, private auth: AuthService) {}
+
+  getProjects(id: string): Observable<any> {
+    return this.http.get(this.serverUrl + '/' + id, this.httpTokenHeader);
   }
 
   addProject(project: Project): Observable<any> {
-    return this.http.post(this.serverUrl, project, httpOptions);
+    return this.http.post(this.serverUrl, project, this.httpTokenHeader);
   }
 
   deleteProject(projectId: string): Observable<any> {
-    return this.http.delete(this.serverUrl + '/' + projectId, httpOptions).pipe(catchError(this.handleError));
+    return this.http.delete(this.serverUrl + '/' + projectId, this.httpTokenHeader).pipe(catchError(this.handleError));
   }
 
   // Lägg koden för felhantering i egen fil för global användning

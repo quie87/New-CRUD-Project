@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -6,7 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main.page.scss']
 })
 export class MainPage implements OnInit {
-  constructor() {}
+  constructor(public auth: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.auth.loadUser().subscribe();
+  }
+
+  isUserLoaded(): boolean {
+    const user = this.auth.getUser();
+    if (user && user.name) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

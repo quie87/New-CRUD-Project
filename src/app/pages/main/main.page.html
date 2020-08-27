@@ -1,5 +1,5 @@
 <app-header></app-header>
 
-<ion-content>
+<ion-content *ngIf="this.isUserLoaded()">
   <app-projects> </app-projects>
 </ion-content>
