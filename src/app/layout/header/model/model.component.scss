@@ -1,10 +1,3 @@
-@import '../../../app.component.scss';
-
-.btn {
-  width: 6em;
-  height: 3em;
-  background-color: $main-green-light;
-  color: $main-black;
-  border-radius: 15%;
-  padding: 0;
+ion-button {
+  --background: var(--ion-color-secondary);
 }

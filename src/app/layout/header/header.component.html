@@ -1,21 +1,23 @@
 <ion-header class="no-boarder">
-  <ion-toolbar>
-    <ion-row class="ion-justify-content-between ion-align-items-center head">
-      <ion-col class="ion-justify-content-center flex">
-        <ion-title>
-          Get Stuff Done!
-        </ion-title>
-      </ion-col>
-      <ion-col *ngIf="isAuthenticated(); else notAuth" class="ion-justify-content-end flex">
-        <ion-button class="logout-btn" color="danger" fill="clear" (click)="signOut()">
-          <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
-        </ion-button>
-      </ion-col>
-      <ng-template #notAuth>
-        <ion-col class="ion-justify-content-end flex">
-          <app-model></app-model>
+  <ion-item color="primary">
+    <ion-toolbar color="primary">
+      <ion-row class="ion-justify-content-between ion-align-items-center">
+        <ion-col class="ion-justify-content-center flex">
+          <ion-title>
+            Get Stuff Done!
+          </ion-title>
         </ion-col>
-      </ng-template>
-    </ion-row>
-  </ion-toolbar>
+        <ion-col *ngIf="isAuthenticated(); else notAuth" class="ion-justify-content-end flex">
+          <ion-button class="logout-btn" color="danger" fill="clear" (click)="signOut()">
+            <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ng-template #notAuth>
+          <ion-col class="ion-justify-content-end flex">
+            <app-model></app-model>
+          </ion-col>
+        </ng-template>
+      </ion-row>
+    </ion-toolbar>
+  </ion-item>
 </ion-header>

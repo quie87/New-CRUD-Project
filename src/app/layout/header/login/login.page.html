@@ -5,14 +5,14 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="user" (ngSubmit)="onSubmit()">
+  <form [formGroup]="user" (ngSubmit)="onSubmit()" (keydown.enter)="onSubmit()">
     <ion-label>Email</ion-label>
     <ion-item>
-      <ion-textarea formControlName="email" placeholder="Your email..."></ion-textarea>
+      <ion-input formControlName="email" placeholder="Your email..."></ion-input>
     </ion-item>
     <ion-label>Your Password</ion-label>
     <ion-item>
-      <ion-textarea formControlName="password" placeholder="Your password..."></ion-textarea>
+      <ion-input formControlName="password" type="password" placeholder="Your password..."></ion-input>
     </ion-item>
     <ion-button color="danger" (click)="closeModal()">Abort</ion-button>
     <ion-button color="success" type="submit">Sign In</ion-button>
