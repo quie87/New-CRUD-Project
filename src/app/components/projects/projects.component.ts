@@ -4,6 +4,7 @@ import { ProjectsService } from './shared/projects.service';
 import { Project } from '../projects/shared/project.model';
 import { User } from 'src/app/shared/user.model';
 import { AuthService } from 'src/app/shared/auth/auth.service';
+import { Notification } from '../../shared/Notification';
 
 @Component({
   selector: 'app-projects',
@@ -12,6 +13,7 @@ import { AuthService } from 'src/app/shared/auth/auth.service';
 })
 export class ProjectsComponent implements OnInit {
   activeProject: Project;
+  notification = new Notification();
 
   projects: Project[] = [];
   user: User;
@@ -35,14 +37,22 @@ export class ProjectsComponent implements OnInit {
   }
 
   addProject(projectName: string): void {
-    const newProject = {
-      name: projectName,
-      userId: this.user._id
-    };
+    if (this.validate(projectName)) {
+      const newProject = {
+        name: projectName,
+        userId: this.user._id
+      };
 
-    this.projectsService.addProject(newProject).subscribe((project: Project): any => {
-      this.projects.push(project);
-    });
+      this.projectsService.addProject(newProject).subscribe((project: Project): any => {
+        this.projects.push(project);
+      });
+    } else {
+      this.notification.message('You need to enter a name longer then One letter', 'danger');
+    }
+  }
+
+  validate(projectName: string): boolean {
+    return projectName.length > 0 ? true : false;
   }
 
   hasProjects(): boolean {
