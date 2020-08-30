@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { AuthService } from './auth.service';
 import { User } from './user.model';
-import { Observable } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({

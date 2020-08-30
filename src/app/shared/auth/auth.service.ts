@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap, mapTo } from 'rxjs/operators';
-import { User } from './user.model';
+import { User } from '../user.model';
 import { Router } from '@angular/router';
 
 const httpOptions = {

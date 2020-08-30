@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Todo } from '../shared/todo.model';
-import { Project } from '../../projects/shared/project.model';
 import { Observable } from 'rxjs';
 
 const httpOptions = {
@@ -15,8 +14,6 @@ const httpOptions = {
 })
 export class TodosService {
   todosEndpoint = 'https://my-todo-rest-api.herokuapp.com/todos';
-  tempUserId = '5f19b942fdcb080017ab6c13';
-  tempProjectId = '5f19b96dfdcb080017ab6c14';
 
   constructor(private http: HttpClient) {}
 

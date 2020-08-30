@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectsService } from './shared/projects.service';
 
 import { Project } from '../projects/shared/project.model';
-import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/user.model';
-import { AuthService } from 'src/app/shared/auth.service';
+import { AuthService } from 'src/app/shared/auth/auth.service';
 
 @Component({
   selector: 'app-projects',

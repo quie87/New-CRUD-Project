@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes, CanActivate } from '@angular/router';
-import { AuthGuard } from './shared/auth.guard';
+import { AuthGuard } from './shared/auth/auth.guard';
 
 const routes: Routes = [
   {
