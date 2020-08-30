@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap, mapTo } from 'rxjs/operators';
 import { User } from '../user.model';
 import { Router } from '@angular/router';
+import { Notification } from '../../shared/Notification';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -17,16 +18,14 @@ const httpOptions = {
 export class AuthService {
   private serverUrl = 'https://my-todo-rest-api.herokuapp.com/';
   private jwtToken = 'JWT-Token';
-  user: User;
-  authenticated = false;
+  private user: User;
+
+  notification = new Notification();
 
   constructor(private http: HttpClient, private router: Router) {}
 
   isAuthenticated(): boolean {
-    if (localStorage.getItem(this.jwtToken) === null) {
-      return false;
-    }
-    return true;
+    return localStorage.getItem(this.jwtToken) === null ? false : true;
   }
 
   loadUser(): Observable<any> {
@@ -37,18 +36,9 @@ export class AuthService {
       mapTo(true),
       catchError((error: any): any => {
         this.logOut();
-        console.log('Could not find user: ' + error.message);
         return of(false);
       })
     );
-  }
-
-  getUser(): User {
-    return this.user;
-  }
-
-  getToken(): string {
-    return this.jwtToken;
   }
 
   registerNewUser(userToRegistrate: object): Observable<any> {
@@ -60,6 +50,10 @@ export class AuthService {
         return of(false);
       })
     );
+  }
+
+  getUser(): User {
+    return this.user;
   }
 
   signIn(userToSignIn: object): Observable<any> {
@@ -75,26 +69,25 @@ export class AuthService {
 
   logOut(): void {
     localStorage.removeItem(this.jwtToken);
-    this.authenticated = false;
     this.user = null;
     this.router.navigate(['']);
   }
 
-  getTokenFromStore(): string {
-    return localStorage.getItem(this.jwtToken);
+  private storeToken(token: string): void {
+    localStorage.setItem(this.jwtToken, token);
   }
 
-  private doSignIn(res: any): void {
-    this.storeToken(res.token);
-    this.setUser(res.user);
-    this.router.navigate(['/home']);
+  private getTokenFromStore(): string {
+    return localStorage.getItem(this.jwtToken);
   }
 
   private setUser(user: User): void {
     this.user = user;
   }
 
-  private storeToken(token: string): void {
-    localStorage.setItem(this.jwtToken, token);
+  private doSignIn(res: any): void {
+    this.storeToken(res.token);
+    this.setUser(res.user);
+    this.router.navigate(['/home']);
   }
 }
