@@ -73,12 +73,12 @@ export class AuthService {
     this.router.navigate(['']);
   }
 
-  private storeToken(token: string): void {
-    localStorage.setItem(this.jwtToken, token);
+  getTokenFromStore(): string {
+    return localStorage.getItem(this.jwtToken);
   }
 
-  private getTokenFromStore(): string {
-    return localStorage.getItem(this.jwtToken);
+  private storeToken(token: string): void {
+    localStorage.setItem(this.jwtToken, token);
   }
 
   private setUser(user: User): void {

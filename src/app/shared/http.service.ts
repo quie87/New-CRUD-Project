@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+import { AuthService } from './auth/auth.service';
 import { User } from './user.model';
 
 const httpOptions = {
@@ -14,16 +17,26 @@ const httpOptions = {
 export class HttpService {
   baseUrl = 'https://my-todo-rest-api.herokuapp.com/';
   user: User;
-  /*
+
   constructor(private http: HttpClient, private auth: AuthService) {
     if (this.auth.isAuthenticated()) {
-      const token = this.auth.getIdToken();
-      httpOptions.headers = httpOptions.headers.set('Authorization', token);
+      httpOptions.headers = httpOptions.headers.set('x-auth-token', this.auth.getTokenFromStore());
     }
   }
 
-  registerNewUser(newUser: User): Observable<object> {
-    console.log('save user');
-    return this.http.post(this.baseUrl + '/users', newUser, httpOptions);
-  } */
+  fetch(path: string): Observable<object> {
+    return this.http.get(path, httpOptions);
+  }
+
+  post(path: string, body: string): Observable<object> {
+    return this.http.post(path, body, httpOptions);
+  }
+
+  put(path: string, body: any): Observable<object> {
+    return this.http.put(path, body, httpOptions);
+  }
+
+  delete(path: string): Observable<object> {
+    return this.http.delete(path, httpOptions);
+  }
 }
