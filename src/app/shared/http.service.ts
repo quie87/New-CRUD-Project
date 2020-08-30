@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { AuthService } from './auth/auth.service';
 import { User } from './user.model';
@@ -24,19 +25,28 @@ export class HttpService {
     }
   }
 
-  fetch(path: string): Observable<object> {
-    return this.http.get(path, httpOptions);
+  fetch(path: string): Observable<any> {
+    return this.http.get(path, httpOptions).pipe(catchError(this.handleError));
   }
 
-  post(path: string, body: string): Observable<object> {
-    return this.http.post(path, body, httpOptions);
+  post(path: string, body: string): Observable<any> {
+    return this.http.post(path, body, httpOptions).pipe(catchError(this.handleError));
   }
 
-  put(path: string, body: any): Observable<object> {
-    return this.http.put(path, body, httpOptions);
+  put(path: string, body: any): Observable<any> {
+    return this.http.put(path, body, httpOptions).pipe(catchError(this.handleError));
   }
 
-  delete(path: string): Observable<object> {
-    return this.http.delete(path, httpOptions);
+  delete(path: string): Observable<any> {
+    return this.http.delete(path, httpOptions).pipe(catchError(this.handleError));
+  }
+
+  handleError(error: HttpErrorResponse): any {
+    if (error.error instanceof ErrorEvent) {
+      console.error('An error occurred:', error.error.message);
+    } else {
+      console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+    }
+    return throwError('Something bad happened; please try again later.');
   }
 }

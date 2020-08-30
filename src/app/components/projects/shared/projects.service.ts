@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { Project } from './project.model';
 import { AuthService } from 'src/app/shared/auth/auth.service';
+import { HttpService } from 'src/app/shared/http.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -16,7 +16,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ProjectsService {
-  serverUrl = 'https://my-todo-rest-api.herokuapp.com/projects';
+  serverUrl = 'https://my-todo-rest-api.herokuapp.com/';
   projects: Project[];
 
   httpTokenHeader = {
@@ -26,28 +26,23 @@ export class ProjectsService {
     })
   };
 
-  constructor(private http: HttpClient, private auth: AuthService) {}
+  constructor(private http: HttpClient, private auth: AuthService, private httpS: HttpService) {}
 
   getProjects(id: string): Observable<any> {
-    return this.http.get(this.serverUrl + '/' + id, this.httpTokenHeader);
+    return this.http.get(this.serverUrl + 'projects/' + id, this.httpTokenHeader);
   }
 
   addProject(project: Project): Observable<any> {
-    return this.http.post(this.serverUrl, project, this.httpTokenHeader);
+    return this.http.post(this.serverUrl + 'projects', project, this.httpTokenHeader);
   }
 
-  deleteProject(projectId: string): Observable<any> {
-    return this.http.delete(this.serverUrl + '/' + projectId, this.httpTokenHeader).pipe(catchError(this.handleError));
-  }
-
-  // Lägg koden för felhantering i egen fil för global användning
-
-  handleError(error: HttpErrorResponse): any {
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
-    } else {
-      console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
-    }
-    return throwError('Something bad happened; please try again later.');
+  deleteProject(projectId: string): void {
+    this.httpS
+      .delete('https://my-todo-rest-api.herokuapp.com/todos/all/' + `${projectId}`)
+      .subscribe((resp: any): any => {
+        if (resp.status === 202) {
+          this.httpS.delete(this.serverUrl + 'projects/' + `${projectId}`).subscribe();
+        }
+      });
   }
 }
