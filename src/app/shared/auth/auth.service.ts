@@ -30,15 +30,9 @@ export class AuthService {
   }
 
   loadUser(): Observable<any> {
-    // Change this to using the httpOptions and just set the auth-token as a new key in it. However that works
-    const httpTokenHeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'x-auth-token': this.getTokenFromStore()
-      })
-    };
+    httpOptions.headers = httpOptions.headers.set('x-auth-token', this.getTokenFromStore());
 
-    return this.http.get(this.serverUrl + 'users', httpTokenHeader).pipe(
+    return this.http.get(this.serverUrl + 'users', httpOptions).pipe(
       tap((resp: any): any => this.setUser(resp.user)),
       mapTo(true),
       catchError((error: any): any => {
