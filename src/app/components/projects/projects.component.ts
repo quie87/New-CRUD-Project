@@ -31,56 +31,66 @@ export class ProjectsComponent implements OnInit {
     this.subscriptions.forEach((sub: Subscription): any => sub.unsubscribe());
   }
 
-  getProjects(): void {
-    this.http.fetch(this.serverUrl + 'projects').subscribe((projects: any): any => {
-      this.projects = projects.response.allProjects;
-    });
+  protected getProjects(): void {
+    this.subscriptions.push(
+      this.http.fetch(this.serverUrl + 'projects').subscribe(
+        (projects: any): any => {
+          this.projects = projects.response.allProjects;
+        },
+        (err: any): any =>
+          this.notification.message('Could not retrieve projects from the server, pls try again later', 'danger')
+      )
+    );
   }
 
   hasProjects(): boolean {
     return this.projects && this.projects.length > 0 ? true : false;
   }
 
-  addProject(projectName: string): void {
+  protected addProject(projectName: string): void {
     if (this.validate(projectName)) {
       const newProject = {
         name: projectName
       };
 
-      this.http.post(this.serverUrl + 'projects', newProject).subscribe((project: Project): any => {
-        this.projects.push(project);
-        this.activeProject = project;
-      });
+      this.subscriptions.push(
+        this.http.post(this.serverUrl + 'projects', newProject).subscribe((project: Project): any => {
+          this.projects.push(project);
+          this.activeProject = project;
+        })
+      );
     } else {
       this.notification.message('You need to enter a name longer then One letter', 'danger');
     }
   }
 
-  validate(projectName: string): boolean {
-    return projectName.length > 0 ? true : false;
-  }
-
-  onDelete(project: Project): void {
+  protected onDelete(project: Project): void {
     this.projects = this.projects.filter((projects: Project): boolean => {
       return projects._id !== project._id;
     });
 
-    this.http
-      .delete('https://my-todo-rest-api.herokuapp.com/todos/all/' + `${project._id}`)
-      .subscribe((resp: any): any => {
-        this.http.delete(this.serverUrl + 'projects/' + `${project._id}`).subscribe((this.activeProject = null));
-      });
+    this.subscriptions.push(
+      this.http
+        .delete('https://my-todo-rest-api.herokuapp.com/todos/all/' + `${project._id}`)
+        .subscribe((resp: any): any => {
+          this.http.delete(this.serverUrl + 'projects/' + `${project._id}`).subscribe((this.activeProject = null));
+        })
+    );
   }
 
-  setActiveProject(project: Project): void {
+  protected getActiveProject(): Project {
+    return this.activeProject;
+  }
+
+  protected setActiveProject(project: Project): void {
     this.activeProject = project;
   }
 
-  hasActiveProject(): boolean {
+  protected hasActiveProject(): boolean {
     return this.activeProject ? true : false;
   }
 
-  getActiveProject(): Project {
-    return this.activeProject;
+  private validate(projectName: string): boolean {
+    return projectName.length > 0 ? true : false;
   }
 }

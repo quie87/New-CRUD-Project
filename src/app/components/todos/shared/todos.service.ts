@@ -25,7 +25,7 @@ export class TodosService {
 
   constructor(private http: HttpClient, private auth: AuthService) {}
 
-  getTodos(userId: string): Observable<any> {
+  getTodos(): Observable<any> {
     return this.http.get(`${this.todosEndpoint}`, this.httpTokenHeader);
   }
 

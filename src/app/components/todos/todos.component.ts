@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { TodosService } from './shared/todos.service';
+import { AuthService } from 'src/app/shared/auth/auth.service';
 import { Todo } from './shared/todo.model';
 import { Project } from '../projects/shared/project.model';
-import { User } from '../../shared/user.model';
-import { AuthService } from 'src/app/shared/auth/auth.service';
 
 @Component({
   selector: 'app-todos',
@@ -12,7 +13,7 @@ import { AuthService } from 'src/app/shared/auth/auth.service';
 })
 export class TodosComponent implements OnInit {
   @Input() activeProject: Project;
-  user: User;
+  subscriptions: Subscription[] = [];
 
   todos: Todo[] = [];
   completed: string;
@@ -20,11 +21,11 @@ export class TodosComponent implements OnInit {
   constructor(private todosService: TodosService, private auth: AuthService) {}
 
   ngOnInit(): void {
-    this.user = this.auth.getUser();
-    this.todosService.getTodos(this.user._id).subscribe((todos: any): any => (this.todos = todos.response.todos));
+    this.todosService.getTodos().subscribe((todos: any): any => (this.todos = todos.response.todos));
   }
 
   OnDestroy(): void {
+    this.subscriptions.forEach((sub: Subscription): any => sub.unsubscribe());
     this.todos = [];
   }
 
@@ -51,13 +52,15 @@ export class TodosComponent implements OnInit {
       completed: false
     };
 
-    this.todosService.addTodo(newTodo).subscribe((todo: Todo): any => {
-      this.todos.push(todo);
-    });
+    this.subscriptions.push(
+      this.todosService.addTodo(newTodo).subscribe((todo: Todo): any => {
+        this.todos.push(todo);
+      })
+    );
   }
 
   onToggle(todo: Todo): any {
-    this.todosService.toggleCompleted(todo).subscribe();
+    this.subscriptions.push(this.todosService.toggleCompleted(todo).subscribe());
   }
 
   onDelete(todo: Todo): void {
@@ -65,6 +68,6 @@ export class TodosComponent implements OnInit {
       return todos._id !== todo._id;
     });
 
-    this.todosService.deleteTodo(todo).subscribe();
+    this.subscriptions.push(this.todosService.deleteTodo(todo).subscribe());
   }
 }
