@@ -40,9 +40,7 @@ export class ProjectsService {
     this.httpS
       .delete('https://my-todo-rest-api.herokuapp.com/todos/all/' + `${projectId}`)
       .subscribe((resp: any): any => {
-        if (resp.status === 202) {
-          this.httpS.delete(this.serverUrl + 'projects/' + `${projectId}`).subscribe();
-        }
+        this.httpS.delete(this.serverUrl + 'projects/' + `${projectId}`).subscribe();
       });
   }
 }
