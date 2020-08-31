@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ProjectsService } from './shared/projects.service';
+import { Subscription } from 'rxjs';
 
+import { HttpService } from '../../shared/http.service';
 import { Project } from '../projects/shared/project.model';
-import { User } from 'src/app/shared/user.model';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { Notification } from '../../shared/Notification';
 
@@ -12,39 +13,43 @@ import { Notification } from '../../shared/Notification';
   styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent implements OnInit {
+  serverUrl = 'https://my-todo-rest-api.herokuapp.com/';
+  projects: Project[] = [];
   activeProject: Project;
   notification = new Notification();
 
-  projects: Project[] = [];
-  user: User;
+  subscriptions: Subscription[] = [];
 
-  constructor(private projectsService: ProjectsService, private auth: AuthService) {}
+  constructor(private http: HttpService, private projectsService: ProjectsService, private auth: AuthService) {}
 
   ngOnInit(): void {
-    this.user = this.auth.getUser();
-    this.getProjects(this.user._id);
+    this.getProjects();
   }
 
-  OnDestroy(): void {
-    this.projects = [];
-    this.user = null;
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub: Subscription): any => sub.unsubscribe());
   }
 
-  getProjects(id: string): void {
-    this.projectsService
-      .getProjects(id)
-      .subscribe((projects: any): any => (this.projects = projects.response.allProjects));
+  getProjects(): void {
+    this.http.fetch(this.serverUrl + 'projects').subscribe((projects: any): any => {
+      this.projects = projects.response.allProjects;
+    });
+  }
+
+  hasProjects(): boolean {
+    return this.projects && this.projects.length > 0 ? true : false;
   }
 
   addProject(projectName: string): void {
     if (this.validate(projectName)) {
       const newProject = {
-        name: projectName,
-        userId: this.user._id
+        name: projectName
       };
 
-      this.projectsService.addProject(newProject).subscribe((project: Project): any => {
+      this.http.post(this.serverUrl + 'projects', newProject).subscribe((project: Project): any => {
         this.projects.push(project);
+        this.activeProject = project;
       });
     } else {
       this.notification.message('You need to enter a name longer then One letter', 'danger');
@@ -55,19 +60,16 @@ export class ProjectsComponent implements OnInit {
     return projectName.length > 0 ? true : false;
   }
 
-  hasProjects(): boolean {
-    return this.projects && this.projects.length > 0 ? true : false;
-  }
-
   onDelete(project: Project): void {
     this.projects = this.projects.filter((projects: Project): boolean => {
       return projects._id !== project._id;
     });
 
-    this.projectsService.deleteProject(project._id);
-
-    // this.projectsService.deleteProject(project._id).subscribe((res: any): any => console.log(res.status));
-    // this.projectsService.deleteProject(project._id).subscribe();
+    this.http
+      .delete('https://my-todo-rest-api.herokuapp.com/todos/all/' + `${project._id}`)
+      .subscribe((resp: any): any => {
+        this.http.delete(this.serverUrl + 'projects/' + `${project._id}`).subscribe((this.activeProject = null));
+      });
   }
 
   setActiveProject(project: Project): void {
@@ -80,10 +82,5 @@ export class ProjectsComponent implements OnInit {
 
   getActiveProject(): Project {
     return this.activeProject;
-  }
-
-  // move this to authService later, used by Todos component atm
-  getUser(): User {
-    return this.user;
   }
 }

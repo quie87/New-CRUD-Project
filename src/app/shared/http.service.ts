@@ -4,7 +4,6 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { AuthService } from './auth/auth.service';
-import { User } from './user.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -17,7 +16,6 @@ const httpOptions = {
 })
 export class HttpService {
   baseUrl = 'https://my-todo-rest-api.herokuapp.com/';
-  user: User;
 
   constructor(private http: HttpClient, private auth: AuthService) {
     if (this.auth.isAuthenticated()) {
@@ -29,7 +27,7 @@ export class HttpService {
     return this.http.get(path, httpOptions).pipe(catchError(this.handleError));
   }
 
-  post(path: string, body: string): Observable<any> {
+  post(path: string, body: object): Observable<any> {
     return this.http.post(path, body, httpOptions).pipe(catchError(this.handleError));
   }
 

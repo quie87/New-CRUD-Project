@@ -3,6 +3,7 @@ import { TodosService } from './shared/todos.service';
 import { Todo } from './shared/todo.model';
 import { Project } from '../projects/shared/project.model';
 import { User } from '../../shared/user.model';
+import { AuthService } from 'src/app/shared/auth/auth.service';
 
 @Component({
   selector: 'app-todos',
@@ -11,14 +12,15 @@ import { User } from '../../shared/user.model';
 })
 export class TodosComponent implements OnInit {
   @Input() activeProject: Project;
-  @Input() user: User;
+  user: User;
 
   todos: Todo[] = [];
   completed: string;
 
-  constructor(private todosService: TodosService) {}
+  constructor(private todosService: TodosService, private auth: AuthService) {}
 
   ngOnInit(): void {
+    this.user = this.auth.getUser();
     this.todosService.getTodos(this.user._id).subscribe((todos: any): any => (this.todos = todos.response.todos));
   }
 

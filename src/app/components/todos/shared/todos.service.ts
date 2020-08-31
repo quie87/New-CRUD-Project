@@ -26,7 +26,7 @@ export class TodosService {
   constructor(private http: HttpClient, private auth: AuthService) {}
 
   getTodos(userId: string): Observable<any> {
-    return this.http.get(`${this.todosEndpoint}/${userId}`, this.httpTokenHeader);
+    return this.http.get(`${this.todosEndpoint}`, this.httpTokenHeader);
   }
 
   toggleCompleted(todo: Todo): Observable<any> {
